@@ -84,7 +84,7 @@ app.post('/api/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     users[username] = hashedPassword;
 
-    console.log(User registered: ${username}. Total users: ${Object.keys(users).length});
+    console.log(`User registered: ${username}. Total users: ${Object.keys(users).length}`);
 
     res.status(201).json({ 
       success: true, 
@@ -135,7 +135,7 @@ app.post('/api/login', async (req, res) => {
       });
     }
 
-    console.log(User logged in: ${username});
+    console.log('User logged in: ${username}');
 
     res.json({ 
       success: true, 
@@ -161,7 +161,7 @@ app.get('/api/users', (req, res) => {
       registered: true
     }));
 
-    console.log(Users list requested. Total: ${userList.length});
+    console.log(`Users list requested. Total: ${userList.length}`);
 
     res.json({ 
       success: true, 
@@ -184,7 +184,7 @@ app.get('/api/check/:username', (req, res) => {
     const { username } = req.params;
     const exists = !!users[username];
     
-    console.log(Username check: ${username} - exists: ${exists});
+    console.log(`Username check: ${username} - exists: ${exists}`);
     
     res.json({
       success: true,
@@ -214,7 +214,7 @@ app.get('/api/health', (req, res) => {
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
-    message: Endpoint tidak ditemukan: ${req.method} ${req.originalUrl},
+    message: `Endpoint tidak ditemukan: ${req.method} ${req.originalUrl}`,
     availableEndpoints: [
       'GET /',
       'GET /api',
@@ -231,10 +231,9 @@ const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
-    console.log(🚀 Server running on port ${PORT});
-    console.log(📊 Total users: ${Object.keys(users).length});
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📊 Total users: ${Object.keys(users).length}`);
   });
 }
 
 module.exports = app;
-
